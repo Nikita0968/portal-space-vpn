@@ -1,4 +1,3 @@
-[script.js](https://github.com/user-attachments/files/23576564/script.js)
 // Конфигурация Supabase
 const SUPABASE_URL = 'https://geigczqenuqhpvcquiyv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdlaWdjenFlbnVxaHB2Y3F1aXl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3NzM1MTAsImV4cCI6MjA3ODM0OTUxMH0.vx2DaKrqc4aOhdo0txM__LQjcaHPf2pKutgrwzaIg5M';
