@@ -18,12 +18,19 @@
         :root {
             --primary: #6C63FF;
             --primary-dark: #5651d9;
-            --dark: #2A2A3C;
+            --primary-light: #8A84FF;
+            --primary-extra-light: #e0deff;
+            --dark: #1a1a2e;
+            --dark-light: #2d2d44;
             --light: #F8F9FA;
             --gray: #6C757D;
             --success: #28A745;
             --warning: #FFC107;
             --danger: #DC3545;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #8A84FF 100%);
+            --gradient-dark: linear-gradient(135deg, #5651d9 0%, #6C63FF 100%);
+            --card-shadow: 0 10px 30px rgba(108, 99, 255, 0.15);
+            --hover-shadow: 0 15px 40px rgba(108, 99, 255, 0.25);
         }
 
         body {
@@ -40,12 +47,19 @@
         }
 
         header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         }
 
         nav {
@@ -64,24 +78,48 @@
         .logo-img {
             height: 40px;
             width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .logo-img {
+            transform: scale(1.1);
         }
 
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: none;
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-outline {
@@ -91,158 +129,369 @@
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: var(--gradient);
             color: white;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
         }
 
         .btn-outline:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background: var(--gray);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-back:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
         }
 
         .hero {
-            padding: 120px 0 80px;
-            background: linear-gradient(135deg, #6C63FF 0%, #8A84FF 100%);
+            padding: 150px 0 100px;
+            background: var(--gradient);
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
             opacity: 0.9;
         }
 
         .section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--dark);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
         }
 
         .section-title p {
             color: var(--gray);
             max-width: 600px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .feature-card {
             background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
+            box-shadow: var(--hover-shadow);
         }
 
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 1rem;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
         }
 
         .feature-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .dashboard {
             background: var(--dark);
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
 
         .dashboard-container {
             background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 3rem;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1;
         }
 
         .balance-card {
-            background: var(--primary);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            background: var(--gradient);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
         }
 
         .balance-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 1rem 0;
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1.5rem 0;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 2rem;
+            margin-top: 2.5rem;
         }
 
         .stat-card {
             background: rgba(255,255,255,0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
             text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+        }
+
+        .tariffs-section {
+            background: var(--light);
+        }
+
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tariff-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tariff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .tariff-card.popular {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.25);
+        }
+
+        .tariff-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .tariff-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .tariff-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tariff-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .tariff-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1.5rem 0;
+            color: var(--primary);
+        }
+
+        .tariff-period {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .tariff-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .tariff-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .current-tariff {
+            background: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
         }
 
         footer {
             background: var(--dark);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0 2rem;
             text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
+            gap: 2.5rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
             color: var(--light);
             text-decoration: none;
             transition: color 0.3s;
+            font-weight: 500;
         }
 
         .footer-links a:hover {
             color: var(--primary);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
         }
 
         .modal {
@@ -252,24 +501,44 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            overflow-y: auto;
         }
 
         .modal-content {
             background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
             text-align: center;
             position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: modalAppear 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal h3 {
             margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: var(--dark);
         }
 
         .modal p {
@@ -279,22 +548,28 @@
 
         .close-modal {
             position: absolute;
-            top: 10px;
-            right: 15px;
+            top: 15px;
+            right: 20px;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
         }
 
         .user-info {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
+            background: var(--primary-extra-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
             text-align: left;
         }
 
         .user-info p {
-            margin: 0.5rem 0;
+            margin: 0.7rem 0;
             color: var(--dark);
         }
 
@@ -302,26 +577,28 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
 
         .auth-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem;
+            gap: 0.7rem;
+            padding: 1rem;
             border: 2px solid var(--primary);
-            border-radius: 6px;
+            border-radius: 10px;
             background: white;
             color: var(--primary);
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .auth-btn:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
 
         .loading {
@@ -341,7 +618,7 @@
 
         .status-badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -367,68 +644,155 @@
             background: var(--success);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            padding: 0.9rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
         }
 
         .register-btn:hover {
             background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .change-tariff-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .change-tariff-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        /* Анимации для появления элементов при прокрутке */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Дополнительные улучшения дизайна */
+        .hero-btn {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .feature-description {
+            color: var(--gray);
+        }
+
+        .dashboard-title {
+            color: white !important;
+        }
+
+        .dashboard-subtitle {
+            color: rgba(255, 255, 255, 0.8) !important;
         }
 
         /* Адаптивные стили для мобильных устройств */
         @media (max-width: 768px) {
             .hero {
-                padding: 100px 0 60px;
+                padding: 120px 0 80px;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .hero p {
-                font-size: 1rem;
+                font-size: 1.1rem;
                 padding: 0 15px;
             }
             
             .section {
-                padding: 60px 0;
+                padding: 80px 0;
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .features-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
             
             .feature-card {
-                padding: 1.5rem;
+                padding: 2rem 1.5rem;
             }
             
             .stats-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
             .balance-amount {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .dashboard-container {
-                padding: 1.5rem;
+                padding: 2rem;
+            }
+            
+            .tariffs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tariff-card.popular {
+                transform: none;
+            }
+            
+            .tariff-card.popular:hover {
+                transform: translateY(-10px);
             }
             
             .footer-links {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.2rem;
             }
             
             .logo-text {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             
             .logo-img {
@@ -436,14 +800,18 @@
             }
             
             .btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.7rem 1.2rem;
+                font-size: 0.95rem;
+            }
+
+            .modal-content {
+                padding: 2rem 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
             .section-title h2 {
@@ -451,19 +819,19 @@
             }
             
             .feature-card {
-                padding: 1rem;
+                padding: 1.5rem 1rem;
             }
             
             .dashboard-container {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             .balance-card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             .stat-card {
-                padding: 1rem;
+                padding: 1.5rem 1rem;
             }
             
             .modal-content {
@@ -471,7 +839,7 @@
             }
             
             .logo-text {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
             .logo-img {
@@ -482,11 +850,12 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="container">
             <nav>
                 <div class="logo-container">
                     <svg class="logo-img" viewBox="0 0 1024 1024" fill="#6C63FF">
+                        <!-- SVG path остается таким же -->
                         <path d="M4891 8839 c-119 -13 -309 -53 -421 -89 -197 -65 -458 -208 -630 -347 -99 -80 -262 -249 -333 -344 -217 -295 -345 -635 -377 -1009 -6 -69 -10 -668 -10 -1496 0 -1303 1 -1382 18 -1396 9 -8 46 -21 81 -27 35 -7 235 -55 445 -107 210 -53 476 -117 591 -144 116 -27 387 -92 603 -144 l394 -95 111 29 c62 15 321 87 577 159 256 71 616 171 799 221 184 50 342 95 352 101 11 5 22 21 25 36 4 14 5 181 1 369 l-5 344 28 87 c67 207 107 493 116 818 8 254 11 244 -88 265 l-58 11 0 492 c0 531 -6 614 -54 804 -162 638 -658 1165 -1291 1372 -268 87 -587 120 -874 90z m399 -783 c41 -8 116 -27 167 -44 385 -130 640 -399 730 -772 12 -51 17 -144 20 -419 l5 -354 -43 32 c-61 45 -90 41 -174 -20 -67 -48 -240 -159 -249 -159 -3 0 -6 197 -8 438 l-4 437 -25 77 c-66 195 -219 376 -387 458 -113 55 -208 74 -347 67 -179 -7 -294 -50 -418 -156 -90 -76 -154 -157 -202 -256 -86 -178 -80 -90 -77 -1305 2 -711 0 -1083 -7 -1100 -7 -17 -10 315 -10 1057 -1 1042 0 1085 19 1165 22 93 48 167 81 224 12 22 22 48 23 59 0 11 8 20 16 20 8 1 14 7 12 15 -2 8 -1 12 3 9 3 -4 28 16 55 45 33 35 45 53 37 59 -8 5 -7 7 3 5 9 -2 34 11 55 28 120 94 254 140 419 143 138 3 229 -15 333 -66 43 -20 84 -36 91 -35 7 2 11 -1 10 -6 -4 -13 138 -143 146 -134 4 4 6 3 4 -3 -1 -5 18 -42 44 -81 27 -39 62 -101 78 -136 55 -118 60 -162 60 -610 l0 -407 97 61 c53 33 102 65 107 69 6 5 26 20 44 35 17 14 29 30 26 35 -3 5 -10 6 -16 3 -7 -5 -8 -2 -3 5 5 9 11 9 17 3 6 -6 31 -8 57 -6 39 5 51 2 81 -21 l35 -26 3 283 c3 342 -4 415 -63 607 -13 42 -19 51 -27 40 -8 -11 -9 -10 -4 4 9 28 -72 175 -88 160 -4 -5 -7 -3 -6 2 5 25 -4 39 -71 110 -40 42 -76 72 -83 68 -6 -3 -8 -3 -4 1 10 12 -82 88 -99 82 -8 -3 -11 -2 -8 4 12 19 -179 116 -320 161 -33 11 -71 18 -85 15 -14 -3 -18 -2 -10 1 22 10 -104 32 -187 32 -77 1 -211 -14 -255 -29 -15 -5 -30 -5 -33 0 -3 4 28 13 67 20 40 6 80 13 88 15 43 8 214 3 280 -9z m-906 -283 c4 -10 4 -14 0 -10 -8 8 -64 -30 -64 -44 0 -6 4 -8 8 -5 5 3 9 -2 9 -10 0 -10 -4 -11 -11 -4 -14 14 -29 13 -20 -2 4 -7 4 -10 -1 -6 -8 8 -15 1 -66 -62 -115 -146 -189 -330 -209 -522 -6 -62 -10 -535 -10 -1254 l0 -1153 38 -10 c20 -6 63 -16 95 -22 32 -7 55 -14 53 -16 -4 -5 -127 19 -178 33 -17 5 -18 70 -18 1182 0 739 4 1210 10 1267 18 151 93 341 183 464 34 46 165 191 173 191 1 0 5 -8 8 -17z m502 -992 c32 -15 68 -50 89 -88 0 -1 21 5 45 13 98 34 125 -33 44 -105 -26 -23 -51 -41 -55 -41 -5 0 -14 -18 -20 -41 -30 -100 -144 -159 -239 -124 -58 21 -55 21 -127 11 -72 -9 -103 2 -103 39 0 27 28 58 70 75 27 11 28 14 23 64 -15 149 137 259 273 197z m1310 -517 c218 -144 509 -266 798 -335 l99 -24 -7 -160 c-33 -748 -218 -1140 -713 -1512 -150 -112 -208 -143 -272 -143 -64 0 -484 291 -464 322 3 6 1 8 -5 5 -16 -10 -135 125 -213 241 -191 286 -266 570 -286 1092 l-6 166 69 13 c116 23 303 80 416 127 110 47 298 150 415 229 37 25 68 45 68 45 1 0 46 -30 101 -66z"/>
                         <path d="M5018 6682 c-9 -4 -33 -25 -52 -48 -22 -26 -63 -55 -112 -79 -64 -32 -90 -39 -164 -44 -68 -5 -96 -11 -117 -27 -42 -32 -36 -48 19 -52 57 -4 225 50 331 105 81 43 174 123 163 141 -8 13 -41 15 -68 4z"/>
                         <path d="M5330 5609 c0 -5 27 -9 59 -9 l59 0 12 -37 c7 -21 40 -114 73 -207 l60 -168 64 178 c36 99 69 191 75 207 10 26 14 27 74 27 35 0 64 -3 64 -6 0 -4 -18 -54 -40 -113 -22 -58 -67 -190 -100 -293 l-61 -188 -63 0 -63 0 -36 93 c-20 50 -68 179 -106 284 -39 106 -75 201 -81 210 -16 25 -14 19 85 -252 104 -284 129 -345 147 -346 111 -5 117 -4 128 16 6 11 37 101 69 200 32 99 75 226 96 283 27 75 35 106 27 114 -19 19 -109 19 -131 0 -10 -9 -35 -64 -54 -122 -74 -218 -94 -265 -101 -242 -4 12 -4 27 0 33 4 7 3 9 -2 6 -6 -3 -18 18 -28 46 -47 137 -98 273 -104 278 -12 11 -122 18 -122 8z"/>
@@ -509,6 +878,7 @@
                     </svg>
                     <div class="logo-text">PortalSpaceVPN</div>
                 </div>
+                <!-- Кнопка входа убрана по требованию -->
             </nav>
         </div>
     </header>
@@ -516,40 +886,42 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Безопасный и быстрый VPN</h1>
-            <p>Защитите свою приватность, обходите ограничения и наслаждайтесь свободным интернетом с PortalSpaceVPN</p>
-            <button class="btn btn-primary" style="background: white; color: var(--primary);" onclick="showLoginModal()">Войти в личный кабинет</button>
+            <div class="hero-content fade-in">
+                <h1>Безопасный и быстрый VPN</h1>
+                <p>Защитите свою приватность, обходите ограничения и наслаждайтесь свободным интернетом с PortalSpaceVPN</p>
+                <button class="btn btn-primary hero-btn" style="background: white; color: var(--primary);" onclick="showLoginModal()">Войти в личный кабинет</button>
+            </div>
         </div>
     </section>
 
     <!-- Features -->
     <section class="section" id="features">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title fade-in">
                 <h2>Почему PortalSpaceVPN?</h2>
-                <p>Наши ключевые преимущества, которые делают нас лучшим выбором</p>
+                <p class="section-subtitle">Наши ключевые преимущества, которые делают нас лучшим выбором для защиты вашей приватности</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h3>Высокая скорость</h3>
-                    <p>Наслаждайтесь потоковой передачей, играйте и просматривайте без задержек благодаря нашей оптимизированной сети.</p>
+                    <p class="feature-description">Наслаждайтесь потоковой передачей, играйте и просматривайте без задержек благодаря нашей оптимизированной сети.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-lock"></i>
                     </div>
                     <h3>Полная безопасность</h3>
-                    <p>Современное  шифрование защищает ваши данные от хакеров и посторонних глаз.</p>
+                    <p class="feature-description">Современное шифрование защищает ваши данные от хакеров и посторонних глаз.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h3>Простота использования</h3>
-                    <p>Весь контроль через Telegram бота - быстро, удобно и безопасно.</p>
+                    <p class="feature-description">Весь контроль через Telegram бота - быстро, удобно и безопасно.</p>
                 </div>
             </div>
         </div>
@@ -558,11 +930,11 @@
     <!-- Dashboard Section -->
     <section class="section dashboard" id="dashboard">
         <div class="container">
-            <div class="section-title">
-                <h2>Личный кабинет</h2>
-                <p>Управляйте своей подпиской и отслеживайте статистику</p>
+            <div class="section-title fade-in">
+                <h2 class="dashboard-title">Личный кабинет</h2>
+                <p class="dashboard-subtitle">Управляйте своей подпиской и отслеживайте статистику использования</p>
             </div>
-            <div class="dashboard-container">
+            <div class="dashboard-container fade-in">
                 <div class="balance-card">
                     <h3>Ваш баланс</h3>
                     <div class="balance-amount" id="balanceValue">
@@ -602,40 +974,100 @@
         </div>
     </section>
 
+    <!-- Tariffs Section -->
+    <section class="section tariffs-section" id="tariffs">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Выберите подходящий тариф</h2>
+                <p class="section-subtitle">Подберите оптимальный тариф для ваших потребностей и наслаждайтесь полной свободой в интернете</p>
+            </div>
+            <div class="tariffs-grid">
+                <div class="tariff-card fade-in">
+                    <div class="tariff-name">Бесплатный</div>
+                    <div class="tariff-price">0 ₽</div>
+                    <div class="tariff-period">навсегда</div>
+                    <ul class="tariff-features">
+                        <li>5 ГБ трафика в месяц</li>
+                        <li>Базовая скорость</li>
+                        <li>До 1 устройства</li>
+                        <li>Ограниченная поддержка</li>
+                    </ul>
+                    <button class="change-tariff-btn" onclick="changeTariff('free')">Выбрать тариф</button>
+                    <div id="current-tariff-free" class="current-tariff" style="display: none;">Текущий тариф</div>
+                </div>
+                <div class="tariff-card popular fade-in">
+                    <div class="tariff-badge">Популярный</div>
+                    <div class="tariff-name">Стандарт</div>
+                    <div class="tariff-price">299 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li>50 ГБ трафика в месяц</li>
+                        <li>Высокая скорость</li>
+                        <li>До 3 устройств</li>
+                        <li>Приоритетная поддержка</li>
+                        <li>Доступ ко всем серверам</li>
+                    </ul>
+                    <button class="change-tariff-btn" onclick="changeTariff('standard')">Выбрать тариф</button>
+                    <div id="current-tariff-standard" class="current-tariff" style="display: none;">Текущий тариф</div>
+                </div>
+                <div class="tariff-card fade-in">
+                    <div class="tariff-name">Премиум</div>
+                    <div class="tariff-price">599 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li>Неограниченный трафик</li>
+                        <li>Максимальная скорость</li>
+                        <li>До 5 устройств</li>
+                        <li>Приоритетная поддержка 24/7</li>
+                        <li>Доступ ко всем серверам</li>
+                        <li>Расширенная статистика</li>
+                    </ul>
+                    <button class="change-tariff-btn" onclick="changeTariff('premium')">Выбрать тариф</button>
+                    <div id="current-tariff-premium" class="current-tariff" style="display: none;">Текущий тариф</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
-                <svg class="logo-img" viewBox="0 0 1024 1024" fill="#6C63FF">
-                    <path d="M4891 8839 c-119 -13 -309 -53 -421 -89 -197 -65 -458 -208 -630 -347 -99 -80 -262 -249 -333 -344 -217 -295 -345 -635 -377 -1009 -6 -69 -10 -668 -10 -1496 0 -1303 1 -1382 18 -1396 9 -8 46 -21 81 -27 35 -7 235 -55 445 -107 210 -53 476 -117 591 -144 116 -27 387 -92 603 -144 l394 -95 111 29 c62 15 321 87 577 159 256 71 616 171 799 221 184 50 342 95 352 101 11 5 22 21 25 36 4 14 5 181 1 369 l-5 344 28 87 c67 207 107 493 116 818 8 254 11 244 -88 265 l-58 11 0 492 c0 531 -6 614 -54 804 -162 638 -658 1165 -1291 1372 -268 87 -587 120 -874 90z m399 -783 c41 -8 116 -27 167 -44 385 -130 640 -399 730 -772 12 -51 17 -144 20 -419 l5 -354 -43 32 c-61 45 -90 41 -174 -20 -67 -48 -240 -159 -249 -159 -3 0 -6 197 -8 438 l-4 437 -25 77 c-66 195 -219 376 -387 458 -113 55 -208 74 -347 67 -179 -7 -294 -50 -418 -156 -90 -76 -154 -157 -202 -256 -86 -178 -80 -90 -77 -1305 2 -711 0 -1083 -7 -1100 -7 -17 -10 315 -10 1057 -1 1042 0 1085 19 1165 22 93 48 167 81 224 12 22 22 48 23 59 0 11 8 20 16 20 8 1 14 7 12 15 -2 8 -1 12 3 9 3 -4 28 16 55 45 33 35 45 53 37 59 -8 5 -7 7 3 5 9 -2 34 11 55 28 120 94 254 140 419 143 138 3 229 -15 333 -66 43 -20 84 -36 91 -35 7 2 11 -1 10 -6 -4 -13 138 -143 146 -134 4 4 6 3 4 -3 -1 -5 18 -42 44 -81 27 -39 62 -101 78 -136 55 -118 60 -162 60 -610 l0 -407 97 61 c53 33 102 65 107 69 6 5 26 20 44 35 17 14 29 30 26 35 -3 5 -10 6 -16 3 -7 -5 -8 -2 -3 5 5 9 11 9 17 3 6 -6 31 -8 57 -6 39 5 51 2 81 -21 l35 -26 3 283 c3 342 -4 415 -63 607 -13 42 -19 51 -27 40 -8 -11 -9 -10 -4 4 9 28 -72 175 -88 160 -4 -5 -7 -3 -6 2 5 25 -4 39 -71 110 -40 42 -76 72 -83 68 -6 -3 -8 -3 -4 1 10 12 -82 88 -99 82 -8 -3 -11 -2 -8 4 12 19 -179 116 -320 161 -33 11 -71 18 -85 15 -14 -3 -18 -2 -10 1 22 10 -104 32 -187 32 -77 1 -211 -14 -255 -29 -15 -5 -30 -5 -33 0 -3 4 28 13 67 20 40 6 80 13 88 15 43 8 214 3 280 -9z m-906 -283 c4 -10 4 -14 0 -10 -8 8 -64 -30 -64 -44 0 -6 4 -8 8 -5 5 3 9 -2 9 -10 0 -10 -4 -11 -11 -4 -14 14 -29 13 -20 -2 4 -7 4 -10 -1 -6 -8 8 -15 1 -66 -62 -115 -146 -189 -330 -209 -522 -6 -62 -10 -535 -10 -1254 l0 -1153 38 -10 c20 -6 63 -16 95 -22 32 -7 55 -14 53 -16 -4 -5 -127 19 -178 33 -17 5 -18 70 -18 1182 0 739 4 1210 10 1267 18 151 93 341 183 464 34 46 165 191 173 191 1 0 5 -8 8 -17z m502 -992 c32 -15 68 -50 89 -88 0 -1 21 5 45 13 98 34 125 -33 44 -105 -26 -23 -51 -41 -55 -41 -5 0 -14 -18 -20 -41 -30 -100 -144 -159 -239 -124 -58 21 -55 21 -127 11 -72 -9 -103 2 -103 39 0 27 28 58 70 75 27 11 28 14 23 64 -15 149 137 259 273 197z m1310 -517 c218 -144 509 -266 798 -335 l99 -24 -7 -160 c-33 -748 -218 -1140 -713 -1512 -150 -112 -208 -143 -272 -143 -64 0 -484 291 -464 322 3 6 1 8 -5 5 -16 -10 -135 125 -213 241 -191 286 -266 570 -286 1092 l-6 166 69 13 c116 23 303 80 416 127 110 47 298 150 415 229 37 25 68 45 68 45 1 0 46 -30 101 -66z"/>
-                    <path d="M5018 6682 c-9 -4 -33 -25 -52 -48 -22 -26 -63 -55 -112 -79 -64 -32 -90 -39 -164 -44 -68 -5 -96 -11 -117 -27 -42 -32 -36 -48 19 -52 57 -4 225 50 331 105 81 43 174 123 163 141 -8 13 -41 15 -68 4z"/>
-                    <path d="M5330 5609 c0 -5 27 -9 59 -9 l59 0 12 -37 c7 -21 40 -114 73 -207 l60 -168 64 178 c36 99 69 191 75 207 10 26 14 27 74 27 35 0 64 -3 64 -6 0 -4 -18 -54 -40 -113 -22 -58 -67 -190 -100 -293 l-61 -188 -63 0 -63 0 -36 93 c-20 50 -68 179 -106 284 -39 106 -75 201 -81 210 -16 25 -14 19 85 -252 104 -284 129 -345 147 -346 111 -5 117 -4 128 16 6 11 37 101 69 200 32 99 75 226 96 283 27 75 35 106 27 114 -19 19 -109 19 -131 0 -10 -9 -35 -64 -54 -122 -74 -218 -94 -265 -101 -242 -4 12 -4 27 0 33 4 7 3 9 -2 6 -6 -3 -18 18 -28 46 -47 137 -98 273 -104 278 -12 11 -122 18 -122 8z"/>
-                    <path d="M5912 5304 c-2 -243 1 -304 11 -313 13 -10 124 -7 135 3 2 3 5 46 6 96 l1 91 78 4 c92 5 139 25 179 75 32 41 51 127 39 180 -6 29 -8 24 -7 -31 0 -90 -32 -154 -93 -186 -36 -19 -60 -23 -128 -23 l-83 0 0 -100 0 -100 -55 0 c-30 0 -58 0 -62 0 -5 0 -10 136 -13 302 l-5 303 -3 -301z"/>
-                    <path d="M6892 5298 l-2 -298 -70 0 -70 0 -28 50 c-23 43 -150 253 -181 300 -7 10 -10 -44 -10 -169 -1 -101 1 -182 4 -180 2 3 5 78 6 168 l1 162 35 -58 c97 -157 113 -188 107 -208 -4 -14 -3 -16 4 -6 7 10 15 4 32 -27 13 -23 32 -42 44 -44 38 -8 115 -3 126 8 7 7 9 111 7 305 l-2 294 -3 -297z"/>
-                    <path d="M2535 3317 c-145 -38 -230 -138 -256 -298 -27 -170 41 -328 172 -400 62 -33 67 -34 179 -34 106 0 119 2 167 27 68 36 120 90 152 158 24 50 26 66 26 180 0 114 -2 130 -26 180 -37 78 -81 125 -152 160 -74 36 -183 47 -262 27z m185 -147 c78 -40 113 -107 113 -221 1 -58 -4 -86 -22 -122 -74 -153 -284 -155 -364 -3 -32 61 -31 192 2 259 49 101 167 139 271 87z"/>
-                    <path d="M5724 3320 c-58 -8 -88 -22 -127 -59 -46 -42 -61 -79 -61 -151 0 -69 11 -98 53 -143 36 -39 61 -50 171 -77 109 -27 140 -50 140 -104 0 -50 -36 -76 -107 -76 -72 0 -122 22 -136 59 -11 30 -11 30 -76 24 -37 -3 -68 -7 -70 -9 -1 -1 4 -25 13 -52 42 -125 208 -189 370 -143 122 35 189 173 141 289 -33 77 -80 107 -222 142 -134 32 -173 79 -123 143 41 52 144 47 198 -10 l32 -35 70 9 70 8 -24 50 c-13 28 -34 60 -47 72 -56 51 -163 77 -265 63z"/>
-                    <path d="M7572 3302 c-148 -53 -228 -190 -220 -377 3 -79 8 -102 36 -157 61 -125 165 -188 307 -188 135 0 240 61 292 170 35 73 36 72 -38 72 -66 0 -67 0 -109 -46 -103 -112 -273 -77 -331 69 -17 44 -14 163 5 210 33 77 112 135 186 135 48 0 110 -31 143 -69 25 -31 31 -33 97 -34 39 -1 70 -1 70 1 0 13 -56 109 -81 136 -73 84 -239 120 -357 78z"/>
-                    <path d="M1670 2948 l0 -363 75 0 75 0 0 121 0 121 108 5 c114 5 165 22 208 70 82 90 84 240 3 332 -58 66 -98 76 -301 76 l-168 0 0 -362z m347 215 c34 -23 49 -83 32 -129 -20 -53 -65 -74 -156 -74 l-73 0 0 113 0 112 87 -4 c55 -2 96 -9 110 -18z"/>
-                    <path d="M3090 2948 l0 -363 70 0 70 0 0 128 0 127 53 0 52 -1 80 -125 80 -126 83 1 c45 0 85 0 89 1 3 0 -3 10 -14 23 -11 12 -54 73 -96 134 l-76 113 27 14 c94 49 135 170 100 290 -16 53 -81 118 -134 134 -26 7 -106 12 -213 12 l-171 0 0 -362z m347 217 c26 -18 44 -76 36 -115 -3 -16 -16 -39 -30 -52 -21 -20 -37 -23 -119 -26 l-94 -4 0 106 0 106 93 0 c67 0 99 -4 114 -15z"/>
-                    <path d="M3700 3250 l0 -60 100 0 101 0 -1 -301 -1 -301 73 0 73 0 3 301 2 301 100 0 100 0 0 60 0 60 -275 0 -275 0 0 -60z"/>
-                    <path d="M4475 3298 c-41 -115 -219 -577 -271 -703 -3 -6 27 -9 78 -8 l83 1 29 76 29 76 143 0 142 0 21 -62 c12 -35 25 -68 29 -75 9 -14 174 -23 168 -8 -21 48 -184 460 -226 573 l-54 142 -83 0 c-58 0 -85 -4 -88 -12z m146 -320 l38 -108 -98 0 -99 0 44 118 c24 64 47 124 50 132 7 17 7 17 65 -142z"/>
-                    <path d="M5010 2950 l0 -360 173 -2 c94 -1 193 -3 220 -4 l47 -2 0 69 0 69 -145 0 -145 0 0 295 0 295 -75 0 -75 0 0 -360z"/>
-                    <path d="M6160 2948 l0 -363 73 1 72 0 3 121 3 121 107 4 c84 3 116 9 147 25 81 43 125 118 125 212 0 71 -18 119 -61 166 -60 65 -100 75 -301 75 l-168 0 0 -362z m361 203 c46 -57 28 -150 -35 -176 -20 -9 -67 -15 -106 -15 l-70 0 0 113 0 112 96 -5 c85 -5 99 -9 115 -29z"/>
-                    <path d="M6905 3268 c-9 -24 -62 -167 -117 -318 -54 -151 -106 -292 -114 -313 -7 -20 -14 -41 -14 -45 0 -4 35 -6 77 -5 l78 1 26 74 26 73 140 3 139 3 29 -81 29 -80 74 2 c59 2 72 6 69 18 -8 31 -179 494 -221 597 l-43 108 -80 3 -81 3 -17 -43z m144 -254 c22 -60 42 -117 46 -126 7 -16 -1 -18 -89 -18 l-95 0 28 78 c15 42 36 101 46 130 9 29 19 51 21 49 3 -2 22 -53 43 -113z"/>
-                    <path d="M8110 2945 l0 -365 228 2 227 3 3 68 3 67 -156 0 -155 0 0 85 0 85 140 0 140 0 0 65 0 65 -140 0 -140 0 0 85 0 85 153 -2 152 -2 3 62 3 62 -231 0 -230 0 0 -365z"/>
-                    <path d="M4285 2283 c20 -53 136 -359 161 -428 l30 -80 58 0 59 0 18 50 c10 28 54 146 98 263 l79 213 -61 -3 -61 -3 -63 -175 c-34 -96 -63 -182 -63 -189 0 -33 -20 13 -80 187 l-63 182 -59 0 c-53 0 -59 -2 -53 -17z"/>
-                    <path d="M4930 2036 l0 -266 55 0 55 0 0 89 0 88 85 5 c91 5 118 17 159 71 31 42 33 141 4 191 -39 68 -73 80 -225 84 l-133 4 0 -266z m247 152 c32 -30 32 -90 -2 -123 -20 -21 -34 -25 -80 -25 l-55 0 0 85 0 85 57 0 c44 0 62 -5 80 -22z"/>
-                    <path d="M5470 2035 l0 -265 55 0 55 0 2 170 3 170 103 -170 104 -170 59 0 59 0 0 265 0 265 -55 0 -55 0 -2 -171 -3 -172 -106 169 -105 169 -57 3 -57 3 0 -266z"/>
-                </svg>
-                <div class="logo-text">PortalSpaceVPN</div>
+            <div class="footer-content">
+                <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
+                    <svg class="logo-img" viewBox="0 0 1024 1024" fill="#6C63FF">
+                        <!-- SVG path остается таким же -->
+                        <path d="M4891 8839 c-119 -13 -309 -53 -421 -89 -197 -65 -458 -208 -630 -347 -99 -80 -262 -249 -333 -344 -217 -295 -345 -635 -377 -1009 -6 -69 -10 -668 -10 -1496 0 -1303 1 -1382 18 -1396 9 -8 46 -21 81 -27 35 -7 235 -55 445 -107 210 -53 476 -117 591 -144 116 -27 387 -92 603 -144 l394 -95 111 29 c62 15 321 87 577 159 256 71 616 171 799 221 184 50 342 95 352 101 11 5 22 21 25 36 4 14 5 181 1 369 l-5 344 28 87 c67 207 107 493 116 818 8 254 11 244 -88 265 l-58 11 0 492 c0 531 -6 614 -54 804 -162 638 -658 1165 -1291 1372 -268 87 -587 120 -874 90z m399 -783 c41 -8 116 -27 167 -44 385 -130 640 -399 730 -772 12 -51 17 -144 20 -419 l5 -354 -43 32 c-61 45 -90 41 -174 -20 -67 -48 -240 -159 -249 -159 -3 0 -6 197 -8 438 l-4 437 -25 77 c-66 195 -219 376 -387 458 -113 55 -208 74 -347 67 -179 -7 -294 -50 -418 -156 -90 -76 -154 -157 -202 -256 -86 -178 -80 -90 -77 -1305 2 -711 0 -1083 -7 -1100 -7 -17 -10 315 -10 1057 -1 1042 0 1085 19 1165 22 93 48 167 81 224 12 22 22 48 23 59 0 11 8 20 16 20 8 1 14 7 12 15 -2 8 -1 12 3 9 3 -4 28 16 55 45 33 35 45 53 37 59 -8 5 -7 7 3 5 9 -2 34 11 55 28 120 94 254 140 419 143 138 3 229 -15 333 -66 43 -20 84 -36 91 -35 7 2 11 -1 10 -6 -4 -13 138 -143 146 -134 4 4 6 3 4 -3 -1 -5 18 -42 44 -81 27 -39 62 -101 78 -136 55 -118 60 -162 60 -610 l0 -407 97 61 c53 33 102 65 107 69 6 5 26 20 44 35 17 14 29 30 26 35 -3 5 -10 6 -16 3 -7 -5 -8 -2 -3 5 5 9 11 9 17 3 6 -6 31 -8 57 -6 39 5 51 2 81 -21 l35 -26 3 283 c3 342 -4 415 -63 607 -13 42 -19 51 -27 40 -8 -11 -9 -10 -4 4 9 28 -72 175 -88 160 -4 -5 -7 -3 -6 2 5 25 -4 39 -71 110 -40 42 -76 72 -83 68 -6 -3 -8 -3 -4 1 10 12 -82 88 -99 82 -8 -3 -11 -2 -8 4 12 19 -179 116 -320 161 -33 11 -71 18 -85 15 -14 -3 -18 -2 -10 1 22 10 -104 32 -187 32 -77 1 -211 -14 -255 -29 -15 -5 -30 -5 -33 0 -3 4 28 13 67 20 40 6 80 13 88 15 43 8 214 3 280 -9z m-906 -283 c4 -10 4 -14 0 -10 -8 8 -64 -30 -64 -44 0 -6 4 -8 8 -5 5 3 9 -2 9 -10 0 -10 -4 -11 -11 -4 -14 14 -29 13 -20 -2 4 -7 4 -10 -1 -6 -8 8 -15 1 -66 -62 -115 -146 -189 -330 -209 -522 -6 -62 -10 -535 -10 -1254 l0 -1153 38 -10 c20 -6 63 -16 95 -22 32 -7 55 -14 53 -16 -4 -5 -127 19 -178 33 -17 5 -18 70 -18 1182 0 739 4 1210 10 1267 18 151 93 341 183 464 34 46 165 191 173 191 1 0 5 -8 8 -17z m502 -992 c32 -15 68 -50 89 -88 0 -1 21 5 45 13 98 34 125 -33 44 -105 -26 -23 -51 -41 -55 -41 -5 0 -14 -18 -20 -41 -30 -100 -144 -159 -239 -124 -58 21 -55 21 -127 11 -72 -9 -103 2 -103 39 0 27 28 58 70 75 27 11 28 14 23 64 -15 149 137 259 273 197z m1310 -517 c218 -144 509 -266 798 -335 l99 -24 -7 -160 c-33 -748 -218 -1140 -713 -1512 -150 -112 -208 -143 -272 -143 -64 0 -484 291 -464 322 3 6 1 8 -5 5 -16 -10 -135 125 -213 241 -191 286 -266 570 -286 1092 l-6 166 69 13 c116 23 303 80 416 127 110 47 298 150 415 229 37 25 68 45 68 45 1 0 46 -30 101 -66z"/>
+                        <path d="M5018 6682 c-9 -4 -33 -25 -52 -48 -22 -26 -63 -55 -112 -79 -64 -32 -90 -39 -164 -44 -68 -5 -96 -11 -117 -27 -42 -32 -36 -48 19 -52 57 -4 225 50 331 105 81 43 174 123 163 141 -8 13 -41 15 -68 4z"/>
+                        <path d="M5330 5609 c0 -5 27 -9 59 -9 l59 0 12 -37 c7 -21 40 -114 73 -207 l60 -168 64 178 c36 99 69 191 75 207 10 26 14 27 74 27 35 0 64 -3 64 -6 0 -4 -18 -54 -40 -113 -22 -58 -67 -190 -100 -293 l-61 -188 -63 0 -63 0 -36 93 c-20 50 -68 179 -106 284 -39 106 -75 201 -81 210 -16 25 -14 19 85 -252 104 -284 129 -345 147 -346 111 -5 117 -4 128 16 6 11 37 101 69 200 32 99 75 226 96 283 27 75 35 106 27 114 -19 19 -109 19 -131 0 -10 -9 -35 -64 -54 -122 -74 -218 -94 -265 -101 -242 -4 12 -4 27 0 33 4 7 3 9 -2 6 -6 -3 -18 18 -28 46 -47 137 -98 273 -104 278 -12 11 -122 18 -122 8z"/>
+                        <path d="M5912 5304 c-2 -243 1 -304 11 -313 13 -10 124 -7 135 3 2 3 5 46 6 96 l1 91 78 4 c92 5 139 25 179 75 32 41 51 127 39 180 -6 29 -8 24 -7 -31 0 -90 -32 -154 -93 -186 -36 -19 -60 -23 -128 -23 l-83 0 0 -100 0 -100 -55 0 c-30 0 -58 0 -62 0 -5 0 -10 136 -13 302 l-5 303 -3 -301z"/>
+                        <path d="M6892 5298 l-2 -298 -70 0 -70 0 -28 50 c-23 43 -150 253 -181 300 -7 10 -10 -44 -10 -169 -1 -101 1 -182 4 -180 2 3 5 78 6 168 l1 162 35 -58 c97 -157 113 -188 107 -208 -4 -14 -3 -16 4 -6 7 10 15 4 32 -27 13 -23 32 -42 44 -44 38 -8 115 -3 126 8 7 7 9 111 7 305 l-2 294 -3 -297z"/>
+                        <path d="M2535 3317 c-145 -38 -230 -138 -256 -298 -27 -170 41 -328 172 -400 62 -33 67 -34 179 -34 106 0 119 2 167 27 68 36 120 90 152 158 24 50 26 66 26 180 0 114 -2 130 -26 180 -37 78 -81 125 -152 160 -74 36 -183 47 -262 27z m185 -147 c78 -40 113 -107 113 -221 1 -58 -4 -86 -22 -122 -74 -153 -284 -155 -364 -3 -32 61 -31 192 2 259 49 101 167 139 271 87z"/>
+                        <path d="M5724 3320 c-58 -8 -88 -22 -127 -59 -46 -42 -61 -79 -61 -151 0 -69 11 -98 53 -143 36 -39 61 -50 171 -77 109 -27 140 -50 140 -104 0 -50 -36 -76 -107 -76 -72 0 -122 22 -136 59 -11 30 -11 30 -76 24 -37 -3 -68 -7 -70 -9 -1 -1 4 -25 13 -52 42 -125 208 -189 370 -143 122 35 189 173 141 289 -33 77 -80 107 -222 142 -134 32 -173 79 -123 143 41 52 144 47 198 -10 l32 -35 70 9 70 8 -24 50 c-13 28 -34 60 -47 72 -56 51 -163 77 -265 63z"/>
+                        <path d="M7572 3302 c-148 -53 -228 -190 -220 -377 3 -79 8 -102 36 -157 61 -125 165 -188 307 -188 135 0 240 61 292 170 35 73 36 72 -38 72 -66 0 -67 0 -109 -46 -103 -112 -273 -77 -331 69 -17 44 -14 163 5 210 33 77 112 135 186 135 48 0 110 -31 143 -69 25 -31 31 -33 97 -34 39 -1 70 -1 70 1 0 13 -56 109 -81 136 -73 84 -239 120 -357 78z"/>
+                        <path d="M1670 2948 l0 -363 75 0 75 0 0 121 0 121 108 5 c114 5 165 22 208 70 82 90 84 240 3 332 -58 66 -98 76 -301 76 l-168 0 0 -362z m347 215 c34 -23 49 -83 32 -129 -20 -53 -65 -74 -156 -74 l-73 0 0 113 0 112 87 -4 c55 -2 96 -9 110 -18z"/>
+                        <path d="M3090 2948 l0 -363 70 0 70 0 0 128 0 127 53 0 52 -1 80 -125 80 -126 83 1 c45 0 85 0 89 1 3 0 -3 10 -14 23 -11 12 -54 73 -96 134 l-76 113 27 14 c94 49 135 170 100 290 -16 53 -81 118 -134 134 -26 7 -106 12 -213 12 l-171 0 0 -362z m347 217 c26 -18 44 -76 36 -115 -3 -16 -16 -39 -30 -52 -21 -20 -37 -23 -119 -26 l-94 -4 0 106 0 106 93 0 c67 0 99 -4 114 -15z"/>
+                        <path d="M3700 3250 l0 -60 100 0 101 0 -1 -301 -1 -301 73 0 73 0 3 301 2 301 100 0 100 0 0 60 0 60 -275 0 -275 0 0 -60z"/>
+                        <path d="M4475 3298 c-41 -115 -219 -577 -271 -703 -3 -6 27 -9 78 -8 l83 1 29 76 29 76 143 0 142 0 21 -62 c12 -35 25 -68 29 -75 9 -14 174 -23 168 -8 -21 48 -184 460 -226 573 l-54 142 -83 0 c-58 0 -85 -4 -88 -12z m146 -320 l38 -108 -98 0 -99 0 44 118 c24 64 47 124 50 132 7 17 7 17 65 -142z"/>
+                        <path d="M5010 2950 l0 -360 173 -2 c94 -1 193 -3 220 -4 l47 -2 0 69 0 69 -145 0 -145 0 0 295 0 295 -75 0 -75 0 0 -360z"/>
+                        <path d="M6160 2948 l0 -363 73 1 72 0 3 121 3 121 107 4 c84 3 116 9 147 25 81 43 125 118 125 212 0 71 -18 119 -61 166 -60 65 -100 75 -301 75 l-168 0 0 -362z m361 203 c46 -57 28 -150 -35 -176 -20 -9 -67 -15 -106 -15 l-70 0 0 113 0 112 96 -5 c85 -5 99 -9 115 -29z"/>
+                        <path d="M6905 3268 c-9 -24 -62 -167 -117 -318 -54 -151 -106 -292 -114 -313 -7 -20 -14 -41 -14 -45 0 -4 35 -6 77 -5 l78 1 26 74 26 73 140 3 139 3 29 -81 29 -80 74 2 c59 2 72 6 69 18 -8 31 -179 494 -221 597 l-43 108 -80 3 -81 3 -17 -43z m144 -254 c22 -60 42 -117 46 -126 7 -16 -1 -18 -89 -18 l-95 0 28 78 c15 42 36 101 46 130 9 29 19 51 21 49 3 -2 22 -53 43 -113z"/>
+                        <path d="M8110 2945 l0 -365 228 2 227 3 3 68 3 67 -156 0 -155 0 0 85 0 85 140 0 140 0 0 65 0 65 -140 0 -140 0 0 85 0 85 153 -2 152 -2 3 62 3 62 -231 0 -230 0 0 -365z"/>
+                        <path d="M4285 2283 c20 -53 136 -359 161 -428 l30 -80 58 0 59 0 18 50 c10 28 54 146 98 263 l79 213 -61 -3 -61 -3 -63 -175 c-34 -96 -63 -182 -63 -189 0 -33 -20 13 -80 187 l-63 182 -59 0 c-53 0 -59 -2 -53 -17z"/>
+                        <path d="M4930 2036 l0 -266 55 0 55 0 0 89 0 88 85 5 c91 5 118 17 159 71 31 42 33 141 4 191 -39 68 -73 80 -225 84 l-133 4 0 -266z m247 152 c32 -30 32 -90 -2 -123 -20 -21 -34 -25 -80 -25 l-55 0 0 85 0 85 57 0 c44 0 62 -5 80 -22z"/>
+                        <path d="M5470 2035 l0 -265 55 0 55 0 2 170 3 170 103 -170 104 -170 59 0 59 0 0 265 0 265 -55 0 -55 0 -2 -171 -3 -172 -106 169 -105 169 -57 3 -57 3 0 -266z"/>
+                    </svg>
+                    <div class="logo-text">PortalSpaceVPN</div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                    <a href="#">Контакты</a>
+                </div>
+                <p>Управление через Telegram бота: <a href="https://t.me/PortalSpaceVPNBot" style="color: var(--primary);">@PortalSpaceVPNBot</a></p>
+                <div class="footer-bottom">
+                    <p style="opacity: 0.7;">&copy; 2025 PortalSpaceVPN. Все права защищены.</p>
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Условия использования</a>
-                <a href="#">Контакты</a>
-            </div>
-            <p>Управление через Telegram бота: <a href="https://t.me/PortalSpaceVPNBot" style="color: var(--primary);">@PortalSpaceVPNBot</a></p>
-            <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 PortalSpaceVPN. Все права защищены.</p>
         </div>
     </footer>
 
@@ -657,17 +1089,17 @@
                 </div>
                 
                 <div>
-                    <input type="number" id="manualUserId" placeholder="Введите ваш Telegram ID" style="width: 100%; padding: 0.75rem; margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                    <input type="number" id="manualUserId" placeholder="Введите ваш Telegram ID" class="input-field">
                     <button class="btn btn-primary" style="width: 100%;" onclick="loadUserData()">
                         <i class="fas fa-sign-in-alt"></i> Загрузить данные
                     </button>
-                    <button class="register-btn" style="width: 100%;" onclick="registerUser()">
+                    <button class="register-btn" onclick="registerUser()">
                         <i class="fas fa-user-plus"></i> Зарегистрироваться
                     </button>
                 </div>
             </div>
             
-            <div id="userInfo" style="display: none; background: var(--light); padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: left;">
+            <div id="userInfo" style="display: none; background: var(--primary-extra-light); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; text-align: left;">
                 <h4 style="margin-bottom: 1rem;">Информация о пользователе:</h4>
                 <p><strong>ID пользователя:</strong> <span id="userId"></span></p>
                 <p><strong>Имя:</strong> <span id="userName"></span></p>
@@ -682,6 +1114,11 @@
                 2. Отправьте команду /profile<br>
                 3. Найдите ваш ID в информации профиля
             </p>
+            
+            <!-- Кнопка "Назад" -->
+            <button class="btn-back" onclick="hideLoginModal()">
+                <i class="fas fa-arrow-left"></i> Назад
+            </button>
         </div>
     </div>
 
@@ -692,6 +1129,7 @@
         
         let supabase = null;
         let currentUserId = null;
+        let currentUserTariff = null;
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
@@ -706,6 +1144,9 @@
             
             // Инициализация обработчиков событий
             initializeEventHandlers();
+            
+            // Инициализация анимаций при прокрутке
+            initScrollAnimations();
             
             // Проверка сохраненного пользователя
             checkSavedUser();
@@ -760,6 +1201,36 @@
                     }
                 });
             }
+
+            // Изменение прозрачности хедера при прокрутке
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Наблюдаем за всеми элементами с классом fade-in
+            document.querySelectorAll('.fade-in').forEach(function(element) {
+                observer.observe(element);
+            });
         }
 
         function showLoginModal() {
@@ -931,8 +1402,10 @@
 
                 console.log('✅ Данные пользователя получены:', userData);
                 
+                currentUserTariff = userData.tariff;
                 updateUserInterface(userData);
                 showUserInfoInModal(userData);
+                updateTariffIndicators(userData.tariff);
                 
             } catch (error) {
                 console.error('❌ Ошибка загрузки данных:', error);
@@ -968,6 +1441,19 @@
             document.getElementById('userUsername').textContent = userData.username ? `@${userData.username}` : 'Не указан';
             document.getElementById('userBalance').textContent = `${userData.balance || 0} ₽`;
             document.getElementById('userTariff').textContent = getTariffDisplayName(userData.tariff);
+        }
+
+        function updateTariffIndicators(tariff) {
+            // Скрываем все индикаторы текущего тарифа
+            document.querySelectorAll('.current-tariff').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Показываем индикатор для текущего тарифа
+            const currentTariffElement = document.getElementById(`current-tariff-${tariff}`);
+            if (currentTariffElement) {
+                currentTariffElement.style.display = 'inline-block';
+            }
         }
 
         function getTariffDisplayName(tariff) {
@@ -1025,6 +1511,52 @@
             }
             
             window.open(`https://t.me/PortalSpaceVPNBot?start=topup_${currentUserId}`, '_blank');
+        }
+
+        async function changeTariff(tariff) {
+            if (!currentUserId) {
+                alert('Пожалуйста, сначала войдите в систему');
+                showLoginModal();
+                return;
+            }
+
+            if (currentUserTariff === tariff) {
+                alert('У вас уже активирован этот тариф');
+                return;
+            }
+
+            try {
+                if (!supabase) {
+                    alert('Ошибка подключения к базе данных. Пожалуйста, обновите страницу.');
+                    return;
+                }
+
+                // Обновляем тариф в базе данных
+                const { data, error } = await supabase
+                    .from('users')
+                    .update({ tariff: tariff })
+                    .eq('telegram_id', parseInt(currentUserId))
+                    .select();
+
+                if (error) {
+                    console.error('Ошибка смены тарифа:', error);
+                    alert('Ошибка смены тарифа: ' + error.message);
+                    return;
+                }
+
+                if (data && data.length > 0) {
+                    alert(`✅ Тариф успешно изменен на "${getTariffDisplayName(tariff)}"`);
+                    currentUserTariff = tariff;
+                    updateTariffIndicators(tariff);
+                    
+                    // Обновляем данные пользователя
+                    await fetchUserData(currentUserId);
+                }
+
+            } catch (error) {
+                console.error('Ошибка при смене тарифа:', error);
+                alert('Произошла ошибка при смене тарифа: ' + error.message);
+            }
         }
 
         // Автообновление каждые 30 секунд
