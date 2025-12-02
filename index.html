@@ -1063,7 +1063,7 @@
             <div class="tariffs-grid">
                 <div class="tariff-card fade-in">
                     <div class="tariff-name">Бесплатный</div>
-                    <div class="tariff-price">0 ?</div>
+                    <div class="tariff-price">0 ₽</div>
                     <div class="tariff-period">навсегда</div>
                     <ul class="tariff-features">
                         <li>5 ГБ трафика в месяц</li>
@@ -1077,7 +1077,7 @@
                 <div class="tariff-card popular fade-in">
                     <div class="tariff-badge">Популярный</div>
                     <div class="tariff-name">Стандарт</div>
-                    <div class="tariff-price">299 ?</div>
+                    <div class="tariff-price">299 ₽</div>
                     <div class="tariff-period">в месяц</div>
                     <ul class="tariff-features">
                         <li>50 ГБ трафика в месяц</li>
@@ -1091,7 +1091,7 @@
                 </div>
                 <div class="tariff-card fade-in">
                     <div class="tariff-name">Премиум</div>
-                    <div class="tariff-price">599 ?</div>
+                    <div class="tariff-price">599 ₽</div>
                     <div class="tariff-period">в месяц</div>
                     <ul class="tariff-features">
                         <li>Неограниченный трафик</li>
@@ -1182,10 +1182,24 @@
                 <p><strong>Username:</strong> <span id="userUsername"></span></p>
                 <p><strong>Баланс:</strong> <span id="userBalance"></span></p>
                 <p><strong>Тариф:</strong> <span id="userTariff"></span></p>
+                <p><strong>Трафик:</strong> <span id="userTrafficInfo"></span></p>
             </div>
             
+            <div id="transactionHistory" style="display: none; margin-top: 1rem;">
+                <h4 style="margin-bottom: 1rem;">История транзакций:</h4>
+                <div id="transactionsList" style="max-height: 200px; overflow-y: auto;"></div>
+            </div>
+            
+            <button class="btn btn-outline" onclick="showTransactionHistory()" style="margin-top: 1rem; width: 100%;">
+                <i class="fas fa-history"></i> Показать историю транзакций
+            </button>
+            
+            <button class="btn btn-primary" onclick="hideTransactionHistory()" style="margin-top: 0.5rem; width: 100%; display: none;" id="hideHistoryBtn">
+                <i class="fas fa-times"></i> Скрыть историю
+            </button>
+            
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
-                ?? <strong>Как получить Telegram ID?</strong><br>
+                ❓ <strong>Как получить Telegram ID?</strong><br>
                 1. Откройте @PortalSpaceVPNBot<br>
                 2. Отправьте команду /profile<br>
                 3. Найдите ваш ID в информации профиля
@@ -1207,13 +1221,32 @@
         let currentUserId = null;
         let currentUserTariff = null;
 
+        // Цены и лимиты тарифов
+        const TARIFF_PRICES = {
+            'free': 0,
+            'standard': 299,
+            'premium': 599
+        };
+
+        const TARIFF_NAMES = {
+            'free': 'Бесплатный',
+            'standard': 'Стандарт',
+            'premium': 'Премиум'
+        };
+
+        const TARIFF_TRAFFIC_LIMITS = {
+            'free': 5 * 1024, // 5 ГБ в МБ
+            'standard': 50 * 1024, // 50 ГБ в МБ
+            'premium': null // безлимит
+        };
+
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
 
         function initializeApp() {
-            console.log('?? Инициализация приложения...');
+            console.log('🔄 Инициализация приложения...');
             
             // Инициализация Supabase
             initializeSupabase();
@@ -1370,14 +1403,14 @@
                 // Проверяем, доступна ли библиотека Supabase
                 if (typeof supabase !== 'undefined' && window.supabase) {
                     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                    console.log('? Supabase инициализирован');
+                    console.log('✅ Supabase инициализирован');
                     return;
                 }
                 
-                console.error('? Библиотека Supabase не загружена');
+                console.error('❌ Библиотека Supabase не загружена');
                 
             } catch (error) {
-                console.error('? Ошибка инициализации Supabase:', error);
+                console.error('❌ Ошибка инициализации Supabase:', error);
             }
         }
 
@@ -1462,7 +1495,7 @@
             const userIdFromUrl = urlParams.get('user_id');
             
             if (userIdFromUrl) {
-                console.log('?? Найден user_id в URL:', userIdFromUrl);
+                console.log('🔍 Найден user_id в URL:', userIdFromUrl);
                 currentUserId = userIdFromUrl;
                 document.getElementById('manualUserId').value = userIdFromUrl;
                 fetchUserData(userIdFromUrl);
@@ -1473,7 +1506,7 @@
             // Проверяем localStorage
             const savedUserId = localStorage.getItem('portalSpaceUserId');
             if (savedUserId) {
-                console.log('?? Найден сохраненный user_id:', savedUserId);
+                console.log('🔍 Найден сохраненный user_id:', savedUserId);
                 currentUserId = savedUserId;
                 document.getElementById('manualUserId').value = savedUserId;
                 fetchUserData(savedUserId);
@@ -1546,7 +1579,7 @@
                             balance: 0.0,
                             tariff: 'free',
                             traffic_used: 0,
-                            traffic_limit: 1024,
+                            traffic_limit: 5 * 1024, // 5 ГБ
                             created_at: new Date().toISOString()
                         }
                     ])
@@ -1559,7 +1592,7 @@
                 }
 
                 if (newUser && newUser.length > 0) {
-                    alert('? Регистрация успешна! Теперь вы можете войти в систему.');
+                    alert('✅ Регистрация успешна! Теперь вы можете войти в систему.');
                     currentUserId = manualUserId;
                     saveUserId(manualUserId);
                     await fetchUserData(manualUserId);
@@ -1574,10 +1607,10 @@
         async function fetchUserData(userId) {
             try {
                 showLoadingState();
-                console.log('?? Загружаем данные пользователя:', userId);
+                console.log('🔄 Загружаем данные пользователя:', userId);
                 
                 if (!supabase) {
-                    console.error('? Supabase не инициализирован');
+                    console.error('❌ Supabase не инициализирован');
                     showErrorState('Ошибка подключения к базе данных');
                     return;
                 }
@@ -1587,7 +1620,7 @@
                     throw new Error('Некорректный Telegram ID');
                 }
 
-                console.log('?? Делаем запрос к Supabase...');
+                console.log('📡 Делаем запрос к Supabase...');
                 
                 const { data: userData, error } = await supabase
                     .from('users')
@@ -1595,10 +1628,10 @@
                     .eq('telegram_id', telegramId)
                     .single();
 
-                console.log('?? Ответ от Supabase:', { userData, error });
+                console.log('📊 Ответ от Supabase:', { userData, error });
 
                 if (error) {
-                    console.error('? Ошибка Supabase:', error);
+                    console.error('❌ Ошибка Supabase:', error);
                     
                     if (error.code === 'PGRST116') {
                         showUserNotFound(userId);
@@ -1613,7 +1646,7 @@
                     return;
                 }
 
-                console.log('? Данные пользователя получены:', userData);
+                console.log('✅ Данные пользователя получены:', userData);
                 
                 currentUserTariff = userData.tariff;
                 updateUserInterface(userData);
@@ -1621,18 +1654,28 @@
                 updateTariffIndicators(userData.tariff);
                 
             } catch (error) {
-                console.error('? Ошибка загрузки данных:', error);
+                console.error('❌ Ошибка загрузки данных:', error);
                 showErrorState('Ошибка загрузки данных: ' + error.message);
             }
         }
 
         function updateUserInterface(userData) {
             const balance = userData.balance || 0;
-            document.getElementById('balanceValue').innerHTML = `<span style="color: white;">${balance} ?</span>`;
+            document.getElementById('balanceValue').innerHTML = `<span style="color: white;">${balance} ₽</span>`;
             
             const trafficUsedMB = userData.traffic_used || 0;
             const trafficUsedGB = (trafficUsedMB / 1024).toFixed(2);
-            document.getElementById('trafficUsed').innerHTML = `<span style="color: white;">${trafficUsedGB} ГБ</span>`;
+            const trafficLimitMB = userData.traffic_limit;
+            
+            let trafficDisplay;
+            if (trafficLimitMB === null) {
+                trafficDisplay = `${trafficUsedGB} ГБ / ∞`;
+            } else {
+                const trafficLimitGB = (trafficLimitMB / 1024).toFixed(2);
+                trafficDisplay = `${trafficUsedGB} ГБ / ${trafficLimitGB} ГБ`;
+            }
+            
+            document.getElementById('trafficUsed').innerHTML = `<span style="color: white;">${trafficDisplay}</span>`;
             
             const sessions = userData.active_sessions || 0;
             document.getElementById('activeSessions').innerHTML = `<span style="color: white;">${sessions}</span>`;
@@ -1652,8 +1695,22 @@
             document.getElementById('userId').textContent = userData.telegram_id;
             document.getElementById('userName').textContent = userData.first_name || 'Не указано';
             document.getElementById('userUsername').textContent = userData.username ? `@${userData.username}` : 'Не указан';
-            document.getElementById('userBalance').textContent = `${userData.balance || 0} ?`;
+            document.getElementById('userBalance').textContent = `${userData.balance || 0} ₽`;
             document.getElementById('userTariff').textContent = getTariffDisplayName(userData.tariff);
+            
+            // Показываем информацию о лимите трафика
+            const trafficUsedMB = userData.traffic_used || 0;
+            const trafficUsedGB = (trafficUsedMB / 1024).toFixed(2);
+            const trafficLimitMB = userData.traffic_limit;
+            
+            let trafficInfo;
+            if (trafficLimitMB === null) {
+                trafficInfo = `${trafficUsedGB} ГБ / безлимит`;
+            } else {
+                const trafficLimitGB = (trafficLimitMB / 1024).toFixed(2);
+                trafficInfo = `${trafficUsedGB} ГБ / ${trafficLimitGB} ГБ`;
+            }
+            document.getElementById('userTrafficInfo').textContent = trafficInfo;
         }
 
         function updateTariffIndicators(tariff) {
@@ -1670,12 +1727,7 @@
         }
 
         function getTariffDisplayName(tariff) {
-            const tariffNames = {
-                'free': '?? Бесплатный',
-                'standard': '?? Стандарт', 
-                'premium': '? Премиум'
-            };
-            return tariffNames[tariff] || 'Неизвестно';
+            return TARIFF_NAMES[tariff] || 'Неизвестно';
         }
 
         function showLoadingState() {
@@ -1697,8 +1749,9 @@
                 document.getElementById('userId').textContent = userId;
                 document.getElementById('userName').textContent = 'Не найден в базе';
                 document.getElementById('userUsername').textContent = '-';
-                document.getElementById('userBalance').textContent = '0 ?';
+                document.getElementById('userBalance').textContent = '0 ₽';
                 document.getElementById('userTariff').textContent = 'Неизвестно';
+                document.getElementById('userTrafficInfo').textContent = '-';
             }
             
             alert('Пользователь не найден в базе данных. Нажмите кнопку "Зарегистрироваться" для создания аккаунта.');
@@ -1723,7 +1776,14 @@
                 return;
             }
             
-            window.open(`https://t.me/PortalSpaceVPNBot?start=topup_${currentUserId}`, '_blank');
+            const amount = prompt('Введите сумму для пополнения (в рублях):', '100');
+            if (!amount || isNaN(amount) || amount <= 0) {
+                alert('Пожалуйста, введите корректную сумму');
+                return;
+            }
+            
+            // Открываем ссылку для пополнения с указанием суммы
+            window.open(`https://t.me/PortalSpaceVPNBot?start=topup_${currentUserId}_${amount}`, '_blank');
         }
 
         async function changeTariff(tariff) {
@@ -1738,16 +1798,75 @@
                 return;
             }
 
+            const price = TARIFF_PRICES[tariff];
+            const tariffName = TARIFF_NAMES[tariff];
+
             try {
                 if (!supabase) {
                     alert('Ошибка подключения к базе данных. Пожалуйста, обновите страницу.');
                     return;
                 }
 
-                // Обновляем тариф в базе данных
+                // Получаем текущие данные пользователя
+                const { data: userData, error: fetchError } = await supabase
+                    .from('users')
+                    .select('balance')
+                    .eq('telegram_id', parseInt(currentUserId))
+                    .single();
+
+                if (fetchError) {
+                    console.error('Ошибка получения данных пользователя:', fetchError);
+                    alert('Ошибка получения данных пользователя: ' + fetchError.message);
+                    return;
+                }
+
+                const currentBalance = userData.balance || 0;
+
+                // Проверяем баланс для платных тарифов
+                if (price > 0 && currentBalance < price) {
+                    const shortage = price - currentBalance;
+                    alert(`❌ Недостаточно средств!\n\n` +
+                          `Стоимость тарифа "${tariffName}": ${price} ₽\n` +
+                          `Ваш текущий баланс: ${currentBalance} ₽\n` +
+                          `Не хватает: ${shortage} ₽\n\n` +
+                          `Пополните баланс и попробуйте снова.`);
+                    return;
+                }
+
+                // Подтверждение смены тарифа
+                if (price > 0) {
+                    const confirmMessage = `Вы уверены, что хотите перейти на тариф "${tariffName}"?\n\n` +
+                                          `Стоимость: ${price} ₽\n` +
+                                          `Будет списано с баланса: ${price} ₽\n` +
+                                          `Баланс после списания: ${currentBalance - price} ₽`;
+                    
+                    if (!confirm(confirmMessage)) {
+                        return;
+                    }
+                }
+
+                // Списываем деньги и обновляем тариф в одной транзакции
+                const newBalance = price > 0 ? currentBalance - price : currentBalance;
+                const trafficLimit = TARIFF_TRAFFIC_LIMITS[tariff];
+                
+                const updateData = {
+                    tariff: tariff,
+                    balance: newBalance
+                };
+                
+                // Если это бесплатный тариф, сбрасываем использованный трафик
+                if (tariff === 'free') {
+                    updateData.traffic_used = 0;
+                }
+                
+                // Обновляем лимит трафика
+                if (trafficLimit !== null) {
+                    updateData.traffic_limit = trafficLimit;
+                }
+
                 const { data, error } = await supabase
                     .from('users')
-                    .update({ tariff: tariff })
+                    .update(updateData)
                     .eq('telegram_id', parseInt(currentUserId))
                     .select();
 
@@ -1758,8 +1877,26 @@
                 }
 
                 if (data && data.length > 0) {
-                    alert(`? Тариф успешно изменен на "${getTariffDisplayName(tariff)}"`);
+                    // Создаем запись в истории транзакций
+                    if (price > 0) {
+                        await createTransactionRecord(price, tariff);
+                    }
+                    
+                    // Показываем сообщение об успехе
+                    const successMessage = price > 0 
+                        ? `✅ Тариф "${tariffName}" успешно активирован!\n\n` +
+                          `Списано с баланса: ${price} ₽\n` +
+                          `Новый баланс: ${newBalance} ₽\n` +
+                          `Тариф активен до конца месяца.`
+                        : `✅ Тариф "${tariffName}" успешно активирован!\n\n` +
+                          `Тариф активен до конца месяца.`;
+                    
+                    alert(successMessage);
+                    
+                    // Обновляем локальные переменные
                     currentUserTariff = tariff;
+                    
+                    // Обновляем интерфейс
                     updateTariffIndicators(tariff);
                     
                     // Обновляем данные пользователя
@@ -1772,10 +1909,109 @@
             }
         }
 
+        // Функция для создания записи в истории транзакций
+        async function createTransactionRecord(amount, tariff) {
+            try {
+                if (!supabase) return;
+                
+                const transactionData = {
+                    telegram_id: parseInt(currentUserId),
+                    amount: -amount, // отрицательная сумма для списания
+                    type: 'tariff_payment',
+                    description: `Оплата тарифа ${TARIFF_NAMES[tariff]}`,
+                    status: 'completed',
+                    created_at: new Date().toISOString()
+                };
+                
+                const { error } = await supabase
+                    .from('transactions')
+                    .insert([transactionData]);
+                    
+                if (error) {
+                    console.error('Ошибка создания записи транзакции:', error);
+                }
+            } catch (error) {
+                console.error('Ошибка в createTransactionRecord:', error);
+            }
+        }
+
+        // Функция для показа истории транзакций
+        async function showTransactionHistory() {
+            if (!currentUserId) {
+                alert('Пожалуйста, сначала загрузите ваши данные');
+                return;
+            }
+            
+            try {
+                if (!supabase) return;
+                
+                const { data: transactions, error } = await supabase
+                    .from('transactions')
+                    .select('*')
+                    .eq('telegram_id', parseInt(currentUserId))
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                if (error) {
+                    console.error('Ошибка загрузки истории транзакций:', error);
+                    alert('Ошибка загрузки истории транзакций');
+                    return;
+                }
+                
+                const transactionsList = document.getElementById('transactionsList');
+                const transactionHistory = document.getElementById('transactionHistory');
+                const hideHistoryBtn = document.getElementById('hideHistoryBtn');
+                
+                if (transactions && transactions.length > 0) {
+                    let html = '<div style="font-size: 0.9rem;">';
+                    transactions.forEach(transaction => {
+                        const date = new Date(transaction.created_at).toLocaleDateString('ru-RU');
+                        const time = new Date(transaction.created_at).toLocaleTimeString('ru-RU', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        });
+                        const amount = transaction.amount > 0 ? 
+                            `<span style="color: #4ade80;">+${transaction.amount} ₽</span>` : 
+                            `<span style="color: #ff6b6b;">${transaction.amount} ₽</span>`;
+                        
+                        html += `
+                            <div style="padding: 0.5rem; border-bottom: 1px solid rgba(93, 63, 211, 0.2);">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="font-weight: 600;">${transaction.description || 'Транзакция'}</span>
+                                    ${amount}
+                                </div>
+                                <div style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
+                                    ${date} ${time}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    transactionsList.innerHTML = html;
+                } else {
+                    transactionsList.innerHTML = '<p style="text-align: center; color: var(--gray);">Нет транзакций</p>';
+                }
+                
+                transactionHistory.style.display = 'block';
+                hideHistoryBtn.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Ошибка в showTransactionHistory:', error);
+            }
+        }
+
+        function hideTransactionHistory() {
+            const transactionHistory = document.getElementById('transactionHistory');
+            const hideHistoryBtn = document.getElementById('hideHistoryBtn');
+            
+            if (transactionHistory) transactionHistory.style.display = 'none';
+            if (hideHistoryBtn) hideHistoryBtn.style.display = 'none';
+        }
+
         // Автообновление каждые 30 секунд
         setInterval(() => {
             if (currentUserId && supabase) {
-                console.log('?? Автообновление данных...');
+                console.log('🔄 Автообновление данных...');
                 fetchUserData(currentUserId);
             }
         }, 30000);
