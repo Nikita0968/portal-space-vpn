@@ -587,7 +587,7 @@
             padding: 2.5rem;
             border-radius: 20px;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             text-align: center;
             position: relative;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
@@ -767,6 +767,53 @@
             box-shadow: 0 0 0 3px rgba(93, 63, 211, 0.2);
         }
 
+        /* Стили для QR-кода */
+        .qr-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .qr-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .payment-instruction {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .payment-instruction h4 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .payment-instruction ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-instruction li {
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-notice {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            color: var(--danger);
+            font-weight: 600;
+            text-align: center;
+        }
+
         /* Анимации для появления элементов при прокрутке */
         .fade-in {
             opacity: 0;
@@ -934,7 +981,6 @@
             <nav>
                 <div class="logo-container">
                     <svg class="logo-img" viewBox="0 0 1024 1024" fill="#5D3FD3">
-                        <!-- SVG path остается таким же -->
                         <path d="M4891 8839 c-119 -13 -309 -53 -421 -89 -197 -65 -458 -208 -630 -347 -99 -80 -262 -249 -333 -344 -217 -295 -345 -635 -377 -1009 -6 -69 -10 -668 -10 -1496 0 -1303 1 -1382 18 -1396 9 -8 46 -21 81 -27 35 -7 235 -55 445 -107 210 -53 476 -117 591 -144 116 -27 387 -92 603 -144 l394 -95 111 29 c62 15 321 87 577 159 256 71 616 171 799 221 184 50 342 95 352 101 11 5 22 21 25 36 4 14 5 181 1 369 l-5 344 28 87 c67 207 107 493 116 818 8 254 11 244 -88 265 l-58 11 0 492 c0 531 -6 614 -54 804 -162 638 -658 1165 -1291 1372 -268 87 -587 120 -874 90z m399 -783 c41 -8 116 -27 167 -44 385 -130 640 -399 730 -772 12 -51 17 -144 20 -419 l5 -354 -43 32 c-61 45 -90 41 -174 -20 -67 -48 -240 -159 -249 -159 -3 0 -6 197 -8 438 l-4 437 -25 77 c-66 195 -219 376 -387 458 -113 55 -208 74 -347 67 -179 -7 -294 -50 -418 -156 -90 -76 -154 -157 -202 -256 -86 -178 -80 -90 -77 -1305 2 -711 0 -1083 -7 -1100 -7 -17 -10 315 -10 1057 -1 1042 0 1085 19 1165 22 93 48 167 81 224 12 22 22 48 23 59 0 11 8 20 16 20 8 1 14 7 12 15 -2 8 -1 12 3 9 3 -4 28 16 55 45 33 35 45 53 37 59 -8 5 -7 7 3 5 9 -2 34 11 55 28 120 94 254 140 419 143 138 3 229 -15 333 -66 43 -20 84 -36 91 -35 7 2 11 -1 10 -6 -4 -13 138 -143 146 -134 4 4 6 3 4 -3 -1 -5 18 -42 44 -81 27 -39 62 -101 78 -136 55 -118 60 -162 60 -610 l0 -407 97 61 c53 33 102 65 107 69 6 5 26 20 44 35 17 14 29 30 26 35 -3 5 -10 6 -16 3 -7 -5 -8 -2 -3 5 5 9 11 9 17 3 6 -6 31 -8 57 -6 39 5 51 2 81 -21 l35 -26 3 283 c3 342 -4 415 -63 607 -13 42 -19 51 -27 40 -8 -11 -9 -10 -4 4 9 28 -72 175 -88 160 -4 -5 -7 -3 -6 2 5 25 -4 39 -71 110 -40 42 -76 72 -83 68 -6 -3 -8 -3 -4 1 10 12 -82 88 -99 82 -8 -3 -11 -2 -8 4 12 19 -179 116 -320 161 -33 11 -71 18 -85 15 -14 -3 -18 -2 -10 1 22 10 -104 32 -187 32 -77 1 -211 -14 -255 -29 -15 -5 -30 -5 -33 0 -3 4 28 13 67 20 40 6 80 13 88 15 43 8 214 3 280 -9z m-906 -283 c4 -10 4 -14 0 -10 -8 8 -64 -30 -64 -44 0 -6 4 -8 8 -5 5 3 9 -2 9 -10 0 -10 -4 -11 -11 -4 -14 14 -29 13 -20 -2 4 -7 4 -10 -1 -6 -8 8 -15 1 -66 -62 -115 -146 -189 -330 -209 -522 -6 -62 -10 -535 -10 -1254 l0 -1153 38 -10 c20 -6 63 -16 95 -22 32 -7 55 -14 53 -16 -4 -5 -127 19 -178 33 -17 5 -18 70 -18 1182 0 739 4 1210 10 1267 18 151 93 341 183 464 34 46 165 191 173 191 1 0 5 -8 8 -17z m502 -992 c32 -15 68 -50 89 -88 0 -1 21 5 45 13 98 34 125 -33 44 -105 -26 -23 -51 -41 -55 -41 -5 0 -14 -18 -20 -41 -30 -100 -144 -159 -239 -124 -58 21 -55 21 -127 11 -72 -9 -103 2 -103 39 0 27 28 58 70 75 27 11 28 14 23 64 -15 149 137 259 273 197z m1310 -517 c218 -144 509 -266 798 -335 l99 -24 -7 -160 c-33 -748 -218 -1140 -713 -1512 -150 -112 -208 -143 -272 -143 -64 0 -484 291 -464 322 3 6 1 8 -5 5 -16 -10 -135 125 -213 241 -191 286 -266 570 -286 1092 l-6 166 69 13 c116 23 303 80 416 127 110 47 298 150 415 229 37 25 68 45 68 45 1 0 46 -30 101 -66z"/>
                         <path d="M5018 6682 c-9 -4 -33 -25 -52 -48 -22 -26 -63 -55 -112 -79 -64 -32 -90 -39 -164 -44 -68 -5 -96 -11 -117 -27 -42 -32 -36 -48 19 -52 57 -4 225 50 331 105 81 43 174 123 163 141 -8 13 -41 15 -68 4z"/>
                         <path d="M5330 5609 c0 -5 27 -9 59 -9 l59 0 12 -37 c7 -21 40 -114 73 -207 l60 -168 64 178 c36 99 69 191 75 207 10 26 14 27 74 27 35 0 64 -3 64 -6 0 -4 -18 -54 -40 -113 -22 -58 -67 -190 -100 -293 l-61 -188 -63 0 -63 0 -36 93 c-20 50 -68 179 -106 284 -39 106 -75 201 -81 210 -16 25 -14 19 85 -252 104 -284 129 -345 147 -346 111 -5 117 -4 128 16 6 11 37 101 69 200 32 99 75 226 96 283 27 75 35 106 27 114 -19 19 -109 19 -131 0 -10 -9 -35 -64 -54 -122 -74 -218 -94 -265 -101 -242 -4 12 -4 27 0 33 4 7 3 9 -2 6 -6 -3 -18 18 -28 46 -47 137 -98 273 -104 278 -12 11 -122 18 -122 8z"/>
@@ -957,7 +1003,6 @@
                     </svg>
                     <div class="logo-text">PortalSpaceVPN</div>
                 </div>
-                <!-- Кнопка входа убрана по требованию -->
             </nav>
         </div>
     </header>
@@ -1020,7 +1065,7 @@
                         <div class="loading"></div>
                     </div>
                     <p>Для просмотра данных войдите в систему</p>
-                    <button class="btn btn-outline" style="border-color: white; color: white; margin-top: 1rem;" onclick="topUpBalance()">Пополнить баланс</button>
+                    <button class="btn btn-outline" style="border-color: white; color: white; margin-top: 1rem;" onclick="showTopupModal()">Пополнить баланс</button>
                 </div>
                 
                 <div class="stats-grid">
@@ -1114,7 +1159,6 @@
             <div class="footer-content">
                 <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
                     <svg class="logo-img" viewBox="0 0 1024 1024" fill="#5D3FD3">
-                        <!-- SVG path остается таким же -->
                         <path d="M4891 8839 c-119 -13 -309 -53 -421 -89 -197 -65 -458 -208 -630 -347 -99 -80 -262 -249 -333 -344 -217 -295 -345 -635 -377 -1009 -6 -69 -10 -668 -10 -1496 0 -1303 1 -1382 18 -1396 9 -8 46 -21 81 -27 35 -7 235 -55 445 -107 210 -53 476 -117 591 -144 116 -27 387 -92 603 -144 l394 -95 111 29 c62 15 321 87 577 159 256 71 616 171 799 221 184 50 342 95 352 101 11 5 22 21 25 36 4 14 5 181 1 369 l-5 344 28 87 c67 207 107 493 116 818 8 254 11 244 -88 265 l-58 11 0 492 c0 531 -6 614 -54 804 -162 638 -658 1165 -1291 1372 -268 87 -587 120 -874 90z m399 -783 c41 -8 116 -27 167 -44 385 -130 640 -399 730 -772 12 -51 17 -144 20 -419 l5 -354 -43 32 c-61 45 -90 41 -174 -20 -67 -48 -240 -159 -249 -159 -3 0 -6 197 -8 438 l-4 437 -25 77 c-66 195 -219 376 -387 458 -113 55 -208 74 -347 67 -179 -7 -294 -50 -418 -156 -90 -76 -154 -157 -202 -256 -86 -178 -80 -90 -77 -1305 2 -711 0 -1083 -7 -1100 -7 -17 -10 315 -10 1057 -1 1042 0 1085 19 1165 22 93 48 167 81 224 12 22 22 48 23 59 0 11 8 20 16 20 8 1 14 7 12 15 -2 8 -1 12 3 9 3 -4 28 16 55 45 33 35 45 53 37 59 -8 5 -7 7 3 5 9 -2 34 11 55 28 120 94 254 140 419 143 138 3 229 -15 333 -66 43 -20 84 -36 91 -35 7 2 11 -1 10 -6 -4 -13 138 -143 146 -134 4 4 6 3 4 -3 -1 -5 18 -42 44 -81 27 -39 62 -101 78 -136 55 -118 60 -162 60 -610 l0 -407 97 61 c53 33 102 65 107 69 6 5 26 20 44 35 17 14 29 30 26 35 -3 5 -10 6 -16 3 -7 -5 -8 -2 -3 5 5 9 11 9 17 3 6 -6 31 -8 57 -6 39 5 51 2 81 -21 l35 -26 3 283 c3 342 -4 415 -63 607 -13 42 -19 51 -27 40 -8 -11 -9 -10 -4 4 9 28 -72 175 -88 160 -4 -5 -7 -3 -6 2 5 25 -4 39 -71 110 -40 42 -76 72 -83 68 -6 -3 -8 -3 -4 1 10 12 -82 88 -99 82 -8 -3 -11 -2 -8 4 12 19 -179 116 -320 161 -33 11 -71 18 -85 15 -14 -3 -18 -2 -10 1 22 10 -104 32 -187 32 -77 1 -211 -14 -255 -29 -15 -5 -30 -5 -33 0 -3 4 28 13 67 20 40 6 80 13 88 15 43 8 214 3 280 -9z m-906 -283 c4 -10 4 -14 0 -10 -8 8 -64 -30 -64 -44 0 -6 4 -8 8 -5 5 3 9 -2 9 -10 0 -10 -4 -11 -11 -4 -14 14 -29 13 -20 -2 4 -7 4 -10 -1 -6 -8 8 -15 1 -66 -62 -115 -146 -189 -330 -209 -522 -6 -62 -10 -535 -10 -1254 l0 -1153 38 -10 c20 -6 63 -16 95 -22 32 -7 55 -14 53 -16 -4 -5 -127 19 -178 33 -17 5 -18 70 -18 1182 0 739 4 1210 10 1267 18 151 93 341 183 464 34 46 165 191 173 191 1 0 5 -8 8 -17z m502 -992 c32 -15 68 -50 89 -88 0 -1 21 5 45 13 98 34 125 -33 44 -105 -26 -23 -51 -41 -55 -41 -5 0 -14 -18 -20 -41 -30 -100 -144 -159 -239 -124 -58 21 -55 21 -127 11 -72 -9 -103 2 -103 39 0 27 28 58 70 75 27 11 28 14 23 64 -15 149 137 259 273 197z m1310 -517 c218 -144 509 -266 798 -335 l99 -24 -7 -160 c-33 -748 -218 -1140 -713 -1512 -150 -112 -208 -143 -272 -143 -64 0 -484 291 -464 322 3 6 1 8 -5 5 -16 -10 -135 125 -213 241 -191 286 -266 570 -286 1092 l-6 166 69 13 c116 23 303 80 416 127 110 47 298 150 415 229 37 25 68 45 68 45 1 0 46 -30 101 -66z"/>
                         <path d="M5018 6682 c-9 -4 -33 -25 -52 -48 -22 -26 -63 -55 -112 -79 -64 -32 -90 -39 -164 -44 -68 -5 -96 -11 -117 -27 -42 -32 -36 -48 19 -52 57 -4 225 50 331 105 81 43 174 123 163 141 -8 13 -41 15 -68 4z"/>
                         <path d="M5330 5609 c0 -5 27 -9 59 -9 l59 0 12 -37 c7 -21 40 -114 73 -207 l60 -168 64 178 c36 99 69 191 75 207 10 26 14 27 74 27 35 0 64 -3 64 -6 0 -4 -18 -54 -40 -113 -22 -58 -67 -190 -100 -293 l-61 -188 -63 0 -63 0 -36 93 c-20 50 -68 179 -106 284 -39 106 -75 201 -81 210 -16 25 -14 19 85 -252 104 -284 129 -345 147 -346 111 -5 117 -4 128 16 6 11 37 101 69 200 32 99 75 226 96 283 27 75 35 106 27 114 -19 19 -109 19 -131 0 -10 -9 -35 -64 -54 -122 -74 -218 -94 -265 -101 -242 -4 12 -4 27 0 33 4 7 3 9 -2 6 -6 -3 -18 18 -28 46 -47 137 -98 273 -104 278 -12 11 -122 18 -122 8z"/>
@@ -1169,9 +1213,6 @@
                     <button class="btn btn-primary" style="width: 100%;" onclick="loadUserData()">
                         <i class="fas fa-sign-in-alt"></i> Загрузить данные
                     </button>
-                    <button class="register-btn" onclick="registerUser()">
-                        <i class="fas fa-user-plus"></i> Зарегистрироваться
-                    </button>
                 </div>
             </div>
             
@@ -1185,28 +1226,77 @@
                 <p><strong>Трафик:</strong> <span id="userTrafficInfo"></span></p>
             </div>
             
-            <div id="transactionHistory" style="display: none; margin-top: 1rem;">
-                <h4 style="margin-bottom: 1rem;">История транзакций:</h4>
-                <div id="transactionsList" style="max-height: 200px; overflow-y: auto;"></div>
-            </div>
-            
-            <button class="btn btn-outline" onclick="showTransactionHistory()" style="margin-top: 1rem; width: 100%;">
-                <i class="fas fa-history"></i> Показать историю транзакций
-            </button>
-            
-            <button class="btn btn-primary" onclick="hideTransactionHistory()" style="margin-top: 0.5rem; width: 100%; display: none;" id="hideHistoryBtn">
-                <i class="fas fa-times"></i> Скрыть историю
-            </button>
-            
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
-                ❓ <strong>Как получить Telegram ID?</strong><br>
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
+                <p>❓ <strong>Как получить Telegram ID?</strong><br>
                 1. Откройте @PortalSpaceVPNBot<br>
                 2. Отправьте команду /profile<br>
-                3. Найдите ваш ID в информации профиля
-            </p>
+                3. Найдите ваш ID в информации профиля</p>
+            </div>
             
             <!-- Кнопка "Назад" -->
             <button class="btn-back" onclick="hideLoginModal()">
+                <i class="fas fa-arrow-left"></i> Назад
+            </button>
+        </div>
+    </div>
+
+    <!-- Balance Top-up Modal -->
+    <div class="modal" id="topupModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="hideTopupModal()">&times;</span>
+            <h3>Пополнение баланса</h3>
+            
+            <div style="margin: 1.5rem 0;">
+                <p style="color: var(--gray);">Для пополнения баланса используйте QR-код ниже:</p>
+            </div>
+            
+            <!-- QR Code Container -->
+            <div id="qrCodeContainer" style="text-align: center; margin: 2rem 0;">
+                <h4 style="margin-bottom: 1rem;">Оплатите по QR-коду</h4>
+                
+                <div class="qr-container">
+                    <<img src="https://ibb.co/Hp3YDhBd" class="qr-image" alt="QR-код для оплаты">> -->
+                    <div id="qrCodeImage" style="margin: 0 auto; max-width: 300px;">
+                        <div style="width: 250px; height: 250px; background: #f0f0f0; margin: 0 auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #666;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-qrcode" style="font-size: 64px; margin-bottom: 10px; opacity: 0.5;"></i>
+                                <div>Ваш QR-код</div>
+                                <div style="font-size: 14px; margin-top: 5px;">для пополнения баланса</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-instruction">
+                    <h4>Инструкция по оплате:</h4>
+                    <ol>
+                        <li>Откройте приложение вашего банка</li>
+                        <li>Нажмите "Оплатить по QR-коду"</li>
+                        <li>Наведите камеру на QR-код выше</li>
+                        <li>Введите любую сумму (от 100 ₽)</li>
+                        <li>Подтвердите платеж</li>
+                    </ol>
+                </div>
+                
+                <div class="payment-notice">
+                    <i class="fas fa-exclamation-circle"></i> После перевода средств отправьте чек на @PortalSpaceSupport<br>
+                    <small style="display: block; margin-top: 0.5rem; font-weight: normal;">Обязательно укажите ваш Telegram ID в сообщении!</small>
+                </div>
+                
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn btn-primary" onclick="checkPaymentStatus()">
+                        <i class="fas fa-check"></i> Я оплатил
+                    </button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p style="font-size: 0.9rem; color: var(--gray);">
+                    <i class="fas fa-info-circle"></i> Средства зачисляются в течение 15 минут после отправки чека
+                </p>
+            </div>
+            
+            <button class="btn-back" onclick="hideTopupModal()" style="margin-top: 1.5rem;">
                 <i class="fas fa-arrow-left"></i> Назад
             </button>
         </div>
@@ -1232,12 +1322,6 @@
             'free': 'Бесплатный',
             'standard': 'Стандарт',
             'premium': 'Премиум'
-        };
-
-        const TARIFF_TRAFFIC_LIMITS = {
-            'free': 5 * 1024, // 5 ГБ в МБ
-            'standard': 50 * 1024, // 50 ГБ в МБ
-            'premium': null // безлимит
         };
 
         // Инициализация при загрузке страницы
@@ -1418,14 +1502,18 @@
             const loginModal = document.getElementById('loginModal');
             const closeModal = document.getElementById('closeModal');
             const refreshDataBtn = document.getElementById('refreshData');
+            const manualUserIdInput = document.getElementById('manualUserId');
 
             // Закрытие модального окна
             if (closeModal) closeModal.addEventListener('click', hideLoginModal);
 
-            // Клик вне модального окна
+            // Клик вне модальных окон
             window.addEventListener('click', function(e) {
                 if (e.target === loginModal) {
                     hideLoginModal();
+                }
+                if (e.target === document.getElementById('topupModal')) {
+                    hideTopupModal();
                 }
             });
 
@@ -1434,12 +1522,12 @@
                 if (currentUserId) {
                     fetchUserData(currentUserId);
                 } else {
-                    alert('Пожалуйста, сначала загрузите ваши данные через модальное окно');
+                    alert('Пожалуйста, сначала войдите в систему');
+                    showLoginModal();
                 }
             });
 
             // Enter в поле ввода ID
-            const manualUserIdInput = document.getElementById('manualUserId');
             if (manualUserIdInput) {
                 manualUserIdInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
@@ -1489,6 +1577,32 @@
             if (loginModal) loginModal.style.display = 'none';
         }
 
+        function showTopupModal() {
+            if (!currentUserId) {
+                alert('Пожалуйста, сначала войдите в систему');
+                showLoginModal();
+                return;
+            }
+            
+            const topupModal = document.getElementById('topupModal');
+            if (topupModal) topupModal.style.display = 'flex';
+        }
+
+        function hideTopupModal() {
+            const topupModal = document.getElementById('topupModal');
+            if (topupModal) topupModal.style.display = 'none';
+        }
+
+        function checkPaymentStatus() {
+            if (!currentUserId) {
+                alert('Ошибка: пользователь не авторизован');
+                return;
+            }
+            
+            alert(`Спасибо! После отправки чека на @PortalSpaceSupport с указанием вашего Telegram ID (${currentUserId}), ваш баланс будет пополнен в течение 15 минут.`);
+            hideTopupModal();
+        }
+
         function checkSavedUser() {
             // Проверяем URL параметры
             const urlParams = new URLSearchParams(window.location.search);
@@ -1532,76 +1646,6 @@
             currentUserId = manualUserId;
             saveUserId(manualUserId);
             await fetchUserData(manualUserId);
-        }
-
-        async function registerUser() {
-            const manualUserIdInput = document.getElementById('manualUserId');
-            if (!manualUserIdInput) return;
-            
-            const manualUserId = manualUserIdInput.value.trim();
-            
-            if (!manualUserId) {
-                alert('Пожалуйста, введите ваш Telegram ID для регистрации');
-                return;
-            }
-
-            if (isNaN(manualUserId)) {
-                alert('Telegram ID должен быть числом');
-                return;
-            }
-
-            try {
-                if (!supabase) {
-                    alert('Ошибка подключения к базе данных. Пожалуйста, обновите страницу.');
-                    return;
-                }
-
-                // Проверяем, существует ли уже пользователь
-                const { data: existingUser, error: checkError } = await supabase
-                    .from('users')
-                    .select('telegram_id')
-                    .eq('telegram_id', parseInt(manualUserId))
-                    .single();
-
-                if (existingUser) {
-                    alert('Пользователь с таким ID уже зарегистрирован');
-                    return;
-                }
-
-                // Регистрируем нового пользователя
-                const { data: newUser, error } = await supabase
-                    .from('users')
-                    .insert([
-                        {
-                            telegram_id: parseInt(manualUserId),
-                            username: 'user_' + manualUserId,
-                            first_name: 'Пользователь',
-                            balance: 0.0,
-                            tariff: 'free',
-                            traffic_used: 0,
-                            traffic_limit: 5 * 1024, // 5 ГБ
-                            created_at: new Date().toISOString()
-                        }
-                    ])
-                    .select();
-
-                if (error) {
-                    console.error('Ошибка регистрации:', error);
-                    alert('Ошибка регистрации: ' + error.message);
-                    return;
-                }
-
-                if (newUser && newUser.length > 0) {
-                    alert('✅ Регистрация успешна! Теперь вы можете войти в систему.');
-                    currentUserId = manualUserId;
-                    saveUserId(manualUserId);
-                    await fetchUserData(manualUserId);
-                }
-
-            } catch (error) {
-                console.error('Ошибка при регистрации:', error);
-                alert('Произошла ошибка при регистрации: ' + error.message);
-            }
         }
 
         async function fetchUserData(userId) {
@@ -1753,8 +1797,6 @@
                 document.getElementById('userTariff').textContent = 'Неизвестно';
                 document.getElementById('userTrafficInfo').textContent = '-';
             }
-            
-            alert('Пользователь не найден в базе данных. Нажмите кнопку "Зарегистрироваться" для создания аккаунта.');
         }
 
         function showErrorState(message) {
@@ -1768,22 +1810,6 @@
 
         function saveUserId(userId) {
             localStorage.setItem('portalSpaceUserId', userId);
-        }
-
-        function topUpBalance() {
-            if (!currentUserId) {
-                alert('Пожалуйста, сначала загрузите ваши данные');
-                return;
-            }
-            
-            const amount = prompt('Введите сумму для пополнения (в рублях):', '100');
-            if (!amount || isNaN(amount) || amount <= 0) {
-                alert('Пожалуйста, введите корректную сумму');
-                return;
-            }
-            
-            // Открываем ссылку для пополнения с указанием суммы
-            window.open(`https://t.me/PortalSpaceVPNBot?start=topup_${currentUserId}_${amount}`, '_blank');
         }
 
         async function changeTariff(tariff) {
@@ -1845,9 +1871,8 @@
                     }
                 }
 
-                // Списываем деньги и обновляем тариф в одной транзакции
+                // Списываем деньги и обновляем тариф
                 const newBalance = price > 0 ? currentBalance - price : currentBalance;
-                const trafficLimit = TARIFF_TRAFFIC_LIMITS[tariff];
                 
                 const updateData = {
                     tariff: tariff,
@@ -1857,11 +1882,6 @@
                 // Если это бесплатный тариф, сбрасываем использованный трафик
                 if (tariff === 'free') {
                     updateData.traffic_used = 0;
-                }
-                
-                // Обновляем лимит трафика
-                if (trafficLimit !== null) {
-                    updateData.traffic_limit = trafficLimit;
                 }
 
                 const { data, error } = await supabase
@@ -1877,11 +1897,6 @@
                 }
 
                 if (data && data.length > 0) {
-                    // Создаем запись в истории транзакций
-                    if (price > 0) {
-                        await createTransactionRecord(price, tariff);
-                    }
-                    
                     // Показываем сообщение об успехе
                     const successMessage = price > 0 
                         ? `✅ Тариф "${tariffName}" успешно активирован!\n\n` +
@@ -1907,105 +1922,6 @@
                 console.error('Ошибка при смене тарифа:', error);
                 alert('Произошла ошибка при смене тарифа: ' + error.message);
             }
-        }
-
-        // Функция для создания записи в истории транзакций
-        async function createTransactionRecord(amount, tariff) {
-            try {
-                if (!supabase) return;
-                
-                const transactionData = {
-                    telegram_id: parseInt(currentUserId),
-                    amount: -amount, // отрицательная сумма для списания
-                    type: 'tariff_payment',
-                    description: `Оплата тарифа ${TARIFF_NAMES[tariff]}`,
-                    status: 'completed',
-                    created_at: new Date().toISOString()
-                };
-                
-                const { error } = await supabase
-                    .from('transactions')
-                    .insert([transactionData]);
-                    
-                if (error) {
-                    console.error('Ошибка создания записи транзакции:', error);
-                }
-            } catch (error) {
-                console.error('Ошибка в createTransactionRecord:', error);
-            }
-        }
-
-        // Функция для показа истории транзакций
-        async function showTransactionHistory() {
-            if (!currentUserId) {
-                alert('Пожалуйста, сначала загрузите ваши данные');
-                return;
-            }
-            
-            try {
-                if (!supabase) return;
-                
-                const { data: transactions, error } = await supabase
-                    .from('transactions')
-                    .select('*')
-                    .eq('telegram_id', parseInt(currentUserId))
-                    .order('created_at', { ascending: false })
-                    .limit(10);
-                
-                if (error) {
-                    console.error('Ошибка загрузки истории транзакций:', error);
-                    alert('Ошибка загрузки истории транзакций');
-                    return;
-                }
-                
-                const transactionsList = document.getElementById('transactionsList');
-                const transactionHistory = document.getElementById('transactionHistory');
-                const hideHistoryBtn = document.getElementById('hideHistoryBtn');
-                
-                if (transactions && transactions.length > 0) {
-                    let html = '<div style="font-size: 0.9rem;">';
-                    transactions.forEach(transaction => {
-                        const date = new Date(transaction.created_at).toLocaleDateString('ru-RU');
-                        const time = new Date(transaction.created_at).toLocaleTimeString('ru-RU', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                        });
-                        const amount = transaction.amount > 0 ? 
-                            `<span style="color: #4ade80;">+${transaction.amount} ₽</span>` : 
-                            `<span style="color: #ff6b6b;">${transaction.amount} ₽</span>`;
-                        
-                        html += `
-                            <div style="padding: 0.5rem; border-bottom: 1px solid rgba(93, 63, 211, 0.2);">
-                                <div style="display: flex; justify-content: space-between;">
-                                    <span style="font-weight: 600;">${transaction.description || 'Транзакция'}</span>
-                                    ${amount}
-                                </div>
-                                <div style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
-                                    ${date} ${time}
-                                </div>
-                            </div>
-                        `;
-                    });
-                    html += '</div>';
-                    transactionsList.innerHTML = html;
-                } else {
-                    transactionsList.innerHTML = '<p style="text-align: center; color: var(--gray);">Нет транзакций</p>';
-                }
-                
-                transactionHistory.style.display = 'block';
-                hideHistoryBtn.style.display = 'block';
-                
-            } catch (error) {
-                console.error('Ошибка в showTransactionHistory:', error);
-            }
-        }
-
-        function hideTransactionHistory() {
-            const transactionHistory = document.getElementById('transactionHistory');
-            const hideHistoryBtn = document.getElementById('hideHistoryBtn');
-            
-            if (transactionHistory) transactionHistory.style.display = 'none';
-            if (hideHistoryBtn) hideHistoryBtn.style.display = 'none';
         }
 
         // Автообновление каждые 30 секунд
