@@ -1249,16 +1249,18 @@
             <div style="margin: 1.5rem 0;">
                 <p style="color: var(--gray);">Для пополнения баланса используйте QR-код ниже:</p>
             </div>
+            
+            <!-- QR Code Container -->
             <div id="qrCodeContainer" style="text-align: center; margin: 2rem 0;">
                 <h4 style="margin-bottom: 1rem;">Оплатите по QR-коду</h4>
                 
                 <div class="qr-container">
-                   <div id="qrCodeImage" style="margin: 0 auto; max-width: 300px;">
-    <img src="qr-code.jpg" 
-         class="qr-image" 
-         alt="QR-код для оплаты"
-         style="width: 250px; height: 250px; border-radius: 10px; object-fit: cover;">
-</div>
+                    <!-- ВСТАВЬТЕ СВОЙ QR-КОД СЮДА -->
+                    <!-- Замените этот div на <img src="URL_ВАШЕГО_QR_КОДА" class="qr-image" alt="QR-код для оплаты"> -->
+                    <div id="qrCodeImage" style="margin: 0 auto; max-width: 300px;">
+                        <div style="width: 250px; height: 250px; background: #f0f0f0; margin: 0 auto; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #666;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-qrcode" style="font-size: 64px; margin-bottom: 10px; opacity: 0.5;"></i>
                                 <div>Ваш QR-код</div>
                                 <div style="font-size: 14px; margin-top: 5px;">для пополнения баланса</div>
                             </div>
